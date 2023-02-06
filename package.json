@@ -17,9 +17,7 @@
     "morgan": "^1.10.0"
   },
   "scripts": {
-    "start": "nodemon app.js"
+    "start": "node --watch app.js"
   },
-  "devDependencies": {
-    "nodemon": "^2.0.20"
-  }
+  "devDependencies": {}
 }

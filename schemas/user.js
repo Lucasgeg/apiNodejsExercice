@@ -11,8 +11,9 @@ const userSchema = {
       pattern: "^(?=.*[0-9]{3})(?=.*[!@#$%^&*]{2}).{13,}$",
     },
     pseudo: { type: "string" },
+    admin: { type: "boolean" },
   },
-  required: ["name", "email", "password"],
+  required: ["name", "email", "password", "admin"],
 };
 
 module.exports = userSchema;

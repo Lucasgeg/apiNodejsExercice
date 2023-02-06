@@ -23,13 +23,13 @@ const isValid = (schemaValidator, data) => {
 
 const generateAccessToken = (data) => {
   return jwt.sign(data, process.env.JWT_SECRET, {
-    expiresIn: 60 * 5,
+    expiresIn: 60 * 30,
   });
 };
 
 const generateRefreshToken = (data) => {
   return jwt.sign(data, process.env.REFRESH_TOKEN_SECRET, {
-    expiresIn: "1 month",
+    expiresIn: 60 * 60 * 24 * 30,
   });
 };
 
@@ -82,11 +82,18 @@ exports.login = async (req, res) => {
           email: userData.email,
           firstName: userData.firstName,
           id: userData.id,
+          admin: userData.admin,
         });
         return res.status(200).send({
           message: "you are connected!",
           id: userData.id,
           jwt,
+          refreshToken: generateRefreshToken({
+            email: userData.email,
+            firstName: userData.firstName,
+            id: userData.id,
+            admin: userData.admin,
+          }),
         });
       }
       return res.status(403).send({ error: "Invalid password or email :'(" });
@@ -96,12 +103,12 @@ exports.login = async (req, res) => {
     }
   });
 };
-exports.me = async (req, res) => {
-  const authHeader = req.headers && req.headers["authorization"];
-  const token = authenticateToken(authHeader);
-  return res.send(req.user);
+exports.me = (req, res) => {
+  const user = req.user;
+
+  if (user.admin) return res.status(200).send({ message: "admin you are" });
+
   // todo: check the token
-  // todo: extract token
-  // todo: decode token
-  // todo: return user data without password
+  // todo: token ok? return user
+  // todo: toke not ok ? retur 401
 };
