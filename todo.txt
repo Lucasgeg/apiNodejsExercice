@@ -1,0 +1,17 @@
+===> TODO POUR EXERCICE <===
+- 6 route crud
+
+Create:
+-DONE:register / login
+=>admin : menu-> array d'object {id, starter, main, dessert, price, livraison(bool)}
+=>user : order->sendgrid => email to email body{id, menu, livraison, if livraison adresse}
+Read
+=>user : getMenus
+-DONE:me
+Update:
+=>admin : updateMenu
+Delete
+=>admin : deleteMenus
+
+/!\ pour chaque requete user / admin, vérifier si admin === true via le token
+->Swagger à faire

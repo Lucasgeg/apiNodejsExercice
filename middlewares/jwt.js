@@ -16,3 +16,15 @@ exports.authenticateToken = (req, res, next) => {
     next();
   });
 };
+
+exports.isAuthorize = (req, res, next) => {
+  try {
+    this.authenticateToken(req, res, next);
+    if (!req.user.admin)
+      return res.status(401).send({ sorry: "This is not your place" });
+    next();
+  } catch (error) {
+    console.log(error);
+    res.status(500).send("Oh no no no!");
+  }
+};

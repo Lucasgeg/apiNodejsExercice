@@ -3,11 +3,9 @@ const fireStore = require("../firebase-config");
 const bcrypt = require("bcrypt");
 const salt = 10;
 const jwt = require("jsonwebtoken");
+const { isValid } = require("../utils/basics");
 
 const userSchema = require("../schemas/user");
-const Ajv = require("ajv");
-const { authenticateToken } = require("../middlewares/jwt");
-const ajv = new Ajv();
 
 const userAllreadyExist = async (email) => {
   const user = await fireStore.collection("Users").where("email", "==", email);
@@ -15,10 +13,6 @@ const userAllreadyExist = async (email) => {
   const userData = (await user.get()).docs[0];
 
   return userData ? true : false;
-};
-
-const isValid = (schemaValidator, data) => {
-  return ajv.validate(schemaValidator, data);
 };
 
 const generateAccessToken = (data) => {
@@ -65,7 +59,6 @@ exports.register = async (req, res) => {
 };
 exports.login = async (req, res) => {
   const { email, password } = req.body;
-
   const user = fireStore.collection("Users").where("email", "==", email);
 
   const userExist = (await user.get()).docs[0];
@@ -78,12 +71,19 @@ exports.login = async (req, res) => {
   bcrypt.compare(password, userData.password, (err, correct) => {
     try {
       if (correct) {
+        const refreshJwt = generateRefreshToken({
+          email: userData.email,
+          firstName: userData.firstName,
+          id: userData.id,
+          admin: userData.admin,
+        });
         const jwt = generateAccessToken({
           email: userData.email,
           firstName: userData.firstName,
           id: userData.id,
           admin: userData.admin,
         });
+        res.cookie("refresh_token", refreshJwt);
         return res.status(200).send({
           message: "you are connected!",
           id: userData.id,
@@ -107,8 +107,4 @@ exports.me = (req, res) => {
   const user = req.user;
 
   if (user.admin) return res.status(200).send({ message: "admin you are" });
-
-  // todo: check the token
-  // todo: token ok? return user
-  // todo: toke not ok ? retur 401
 };
