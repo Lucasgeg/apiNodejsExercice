@@ -19,10 +19,22 @@ exports.authenticateToken = (req, res, next) => {
 
 exports.isAuthorize = (req, res, next) => {
   try {
-    this.authenticateToken(req, res, next);
-    if (!req.user.admin)
-      return res.status(401).send({ sorry: "This is not your place" });
-    next();
+    const token =
+      req.headers["authorization"] &&
+      req.headers["authorization"].split(" ")[1]; // 'Bearer {token}'
+
+    if (!token) {
+      res.sendStatus(401);
+    }
+    jwt.verify(token, process.env.JWT_SECRET, (err, user) => {
+      if (err) {
+        return res.status(401).send({ error: "Your rights are revoked." });
+      }
+      if (!user.admin)
+        return res.status(401).send({ error: "You're not an admin" });
+      req.user = user;
+      next();
+    });
   } catch (error) {
     console.log(error);
     res.status(500).send("Oh no no no!");
