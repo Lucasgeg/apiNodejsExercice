@@ -108,10 +108,8 @@ exports.me = (req, res) => {
 
   if (user.admin) return res.status(200).send({ message: "admin you are" });
   else
-    return res
-      .status(200)
-      .send({
-        message:
-          "Hey friend! you're not an admin but you can do some request ;-)",
-      });
+    return res.status(200).send({
+      message:
+        "Hey friend! you're not an admin but you can do some request ;-)",
+    });
 };

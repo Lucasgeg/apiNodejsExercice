@@ -1,10 +1,6 @@
 const firestore = require("../firebase-config");
-const { isValid } = require("../utils/basics");
+const { isValid, docExist: itExist, docExist } = require("../utils/basics");
 const menusSchema = require("../schemas/menus");
-
-// TODO: create db collection
-// TODO: add to collection the menu
-// TODO: update the collection and add id
 
 exports.read = async (req, res) => {
   try {
@@ -17,21 +13,14 @@ exports.read = async (req, res) => {
 };
 
 exports.getOneMenu = async (req, res) => {
-  if (!req.body.menuId)
+  if (!req.params.menuId)
     return res
       .status(401)
       .send({ error: "You can't read a menu without a menu id." });
-  try {
-    const menu = firestore.collection("Menus").where("id", "==", req.menuId);
-    if (!menu)
-      return res
-        .status(404)
-        .send({ error: "404 not found the mitical status!" });
-    return res.status(200).json(menu.docs(whe));
-  } catch (error) {
-    console.log(error);
-    return res.status(500).send({ error: "Ouch!" });
-  }
+
+  const doc = await itExist("Menus", req.params.menuId);
+
+  return res.status(200).send(doc.data());
 };
 
 exports.createMenus = async (req, res) => {
@@ -62,8 +51,10 @@ exports.createMenus = async (req, res) => {
 exports.delete = async (req, res) => {
   if (!req.body.menuId)
     return res.status(401).send({ error: "No id, no delete!" });
-
-  firestore
+  const doc = await itExist("Menus", req.body.menuId);
+  if (!doc)
+    return res.status(404).send({ error: "This menu in not in our database" });
+  await firestore
     .collection("Menus")
     .doc(req.body.menuId)
     .delete()
@@ -79,26 +70,20 @@ exports.delete = async (req, res) => {
 };
 
 exports.update = async (req, res) => {
-  console.log("toto");
-  await res.send({ titi: "toto" });
   const data = req.body;
-  const menuToModify = await firestore
-    .collection("Menus")
-    .where("id", "==", data.menuId);
+  const menu = await docExist("Menus", data.id);
 
-  if (!menuToModify)
-    return res.status(404).send({ error: "404 not found the mitical status!" });
+  if (!menu) return res.status(404).send({ message: "Menu not found :-(" });
 
   const newMenu = {
-    ...menuToModify,
+    ...menu.data(),
     ...data,
   };
-
   if (!isValid(menusSchema, newMenu))
     return res.status(401).send({ error: "Your menu doesn't seem right" });
   await firestore
     .collection("Menus")
-    .doc(data.menuId)
+    .doc(data.id)
     .update({
       ...newMenu,
     })
