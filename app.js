@@ -26,6 +26,8 @@ require("./routes/auth")(app);
 // routes for get/post/update/delete menus
 require("./routes/menus")(app);
 
+// require("./utils/swagger")
+
 app.listen(port, () => {
   console.log("server listen on port " + port);
 });
