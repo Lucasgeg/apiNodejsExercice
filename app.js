@@ -1,12 +1,13 @@
-const dotenv = require("dotenv");
-const express = require("express");
-const cors = require("cors");
-const helmet = require("helmet");
-const morgan = require("morgan");
-const bodyParser = require("body-parser");
-const cookieParser = require("cookie-parser");
+const dotenv = require("dotenv"),
+  express = require("express"),
+  cors = require("cors"),
+  helmet = require("helmet"),
+  morgan = require("morgan"),
+  bodyParser = require("body-parser"),
+  cookieParser = require("cookie-parser"),
+  swaggerUi = require("swagger-ui-express");
+const { specs } = require("./utils/swagger");
 dotenv.config();
-
 const app = express();
 const port = process.env.PORT || 8080;
 
@@ -27,6 +28,7 @@ require("./routes/auth")(app);
 require("./routes/menus")(app);
 
 // require("./utils/swagger")
+app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(specs));
 
 app.listen(port, () => {
   console.log("server listen on port " + port);

@@ -1,5 +1,6 @@
 const { authenticateToken } = require("../middlewares/jwt");
 const cookieParser = require("cookie-parser");
+const { userCreation: user } = require("./api-schemas");
 
 module.exports = (app) => {
   const router = require("express").Router();
