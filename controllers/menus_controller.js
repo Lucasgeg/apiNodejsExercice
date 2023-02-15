@@ -3,6 +3,9 @@ const { isValid, docExist: itExist, docExist } = require("../utils/basics");
 const menusSchema = require("../schemas/menus");
 
 exports.read = async (req, res) => {
+  // #swagger.tags = ['Menus']
+  // #swagger.description = 'Service to get all menus from the database';
+  // #swagger.summary = "Service to get all menus from the database";
   try {
     const menusList = await firestore.collection("Menus").get();
     return res.status(200).json(menusList.docs.map((doc) => doc.data()));
@@ -13,6 +16,9 @@ exports.read = async (req, res) => {
 };
 
 exports.getOneMenu = async (req, res) => {
+  // #swagger.tags = ['Menus']
+  // #swagger.description = 'Service to get one menu from the database';
+  // #swagger.summary = "Service to get one menu from the database";
   if (!req.params.menuId)
     return res
       .status(401)
@@ -24,6 +30,9 @@ exports.getOneMenu = async (req, res) => {
 };
 
 exports.createMenus = async (req, res) => {
+  // #swagger.tags = ['Menus']
+  // #swagger.description = 'Service to create menus';
+  // #swagger.summary = "Service to create menus and send to the database";
   const data = req.body;
   if (!isValid(menusSchema, data))
     return res.status(403).send({ menuError: "Your menus is not allowed" });
@@ -49,6 +58,9 @@ exports.createMenus = async (req, res) => {
 };
 
 exports.delete = async (req, res) => {
+  // #swagger.tags = ['Menus']
+  // #swagger.description = 'Service to delete a Menus';
+  // #swagger.summary = "Service to delete" a Menu from the database;
   if (!req.body.menuId)
     return res.status(401).send({ error: "No id, no delete!" });
   const doc = await itExist("Menus", req.body.menuId);
@@ -70,6 +82,9 @@ exports.delete = async (req, res) => {
 };
 
 exports.update = async (req, res) => {
+  // #swagger.tags = ['Menus']
+  // #swagger.description = 'Service to get update a menu';
+  // #swagger.summary = "Service to update a menu from the database";
   const data = req.body;
   const menu = await docExist("Menus", data.id);
 
