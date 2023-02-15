@@ -7,7 +7,6 @@ const dotenv = require("dotenv"),
   cookieParser = require("cookie-parser"),
   swaggerUi = require("swagger-ui-express"),
   swaggerFile = require("./swagger_output.json");
-const { specs } = require("./utils/swagger");
 dotenv.config();
 const app = express();
 const port = process.env.PORT || 8080;
@@ -32,6 +31,6 @@ app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerFile));
 
 app.listen(port, () => {
   process.env.ENVIRONMENT === "development"
-    ? console.log("check the url http://localhost://" + port + "/api-docs")
+    ? console.log("check the url http://localhost:" + port + "/api-docs")
     : console.log("listen on port:" + port);
 });

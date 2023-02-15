@@ -2,11 +2,11 @@
   "swagger": "2.0",
   "info": {
     "version": "3.0.0",
-    "title": "Cars API documentation",
-    "description": "Documentation of Cars API",
+    "title": "Menus API documentation",
+    "description": "Documentation of MenusAPI",
     "termsOfService": "http://swagger.io/terms/",
     "contact": {
-      "email": "contact@cars-api.com"
+      "email": "contact@toto.com"
     },
     "license": {
       "name": "Apache 2.0",
@@ -20,12 +20,6 @@
     }
   ],
   "basePath": "/",
-  "tags": [
-    {
-      "name": "User",
-      "description": "Endpoints"
-    }
-  ],
   "schemes": [
     "http"
   ],
@@ -54,32 +48,15 @@
         "description": "Service to register a new user for the menu API",
         "parameters": [
           {
-            "name": "body",
+            "name": "obj",
             "in": "body",
+            "description": "user Signin information",
             "schema": {
-              "type": "object",
-              "properties": {
-                "email": {
-                  "example": "any"
-                },
-                "password": {
-                  "example": "any"
-                }
-              }
+              "$ref": "#/definitions/AddUser"
             }
           }
         ],
-        "responses": {
-          "200": {
-            "description": "OK"
-          },
-          "403": {
-            "description": "Forbidden"
-          },
-          "500": {
-            "description": "Internal Server Error"
-          }
-        }
+        "responses": {}
       }
     },
     "/login": {
@@ -96,10 +73,10 @@
             "schema": {
               "type": "object",
               "properties": {
-                "email": {
+                "description": {
                   "example": "any"
                 },
-                "password": {
+                "schema": {
                   "example": "any"
                 }
               }
@@ -108,7 +85,31 @@
         ],
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "Some description...",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string",
+                  "example": "you are connected!"
+                },
+                "id": {
+                  "type": "string",
+                  "example": "DKeFxdgpRpHGfCKwNx7D"
+                },
+                "jwt": {
+                  "type": "string",
+                  "example": "A very long token"
+                },
+                "refreshJwt": {
+                  "type": "string",
+                  "example": "An other very long token!"
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
           },
           "403": {
             "description": "Forbidden"
@@ -124,7 +125,7 @@
         "tags": [
           "Auth"
         ],
-        "summary": "Service tto get information",
+        "summary": "Service to get information",
         "description": "Service to get information about current user",
         "parameters": [
           {
@@ -140,7 +141,12 @@
           "401": {
             "description": "Unauthorized"
           }
-        }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
       }
     },
     "/menus": {
@@ -316,84 +322,42 @@
     }
   },
   "definitions": {
-    "User": {
-      "type": "object",
-      "properties": {
-        "name": {
-          "type": "string",
-          "example": "Jhon Doe"
-        },
-        "age": {
-          "type": "number",
-          "example": 29
-        },
-        "parents": {
-          "type": "object",
-          "properties": {
-            "father": {
-              "type": "string",
-              "example": "Simon Doe"
-            },
-            "mother": {
-              "type": "string",
-              "example": "Marie Doe"
-            }
-          }
-        },
-        "diplomas": {
-          "type": "array",
-          "items": {
-            "type": "object",
-            "properties": {
-              "school": {
-                "type": "string",
-                "example": "XYZ University"
-              },
-              "year": {
-                "type": "number",
-                "example": 2020
-              },
-              "completed": {
-                "type": "boolean",
-                "example": true
-              },
-              "internship": {
-                "type": "object",
-                "properties": {
-                  "hours": {
-                    "type": "number",
-                    "example": 290
-                  },
-                  "location": {
-                    "type": "string",
-                    "example": "XYZ Company"
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-    },
     "AddUser": {
       "type": "object",
       "properties": {
         "name": {
           "type": "string",
-          "example": "Jhon Doe"
+          "description": "name of the user",
+          "example": "John Doe"
         },
-        "age": {
-          "type": "number",
-          "example": 29
-        },
-        "about": {
+        "email": {
           "type": "string",
-          "example": ""
+          "pattern": "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+.[a-zA-Z]{2,}$",
+          "description": "email of the user",
+          "example": "toto@gmail.com"
+        },
+        "password": {
+          "type": "string",
+          "description": "password of the user",
+          "pattern": "^(?=.*[0-9]{3})(?=.*[!@#$%^&*]{2}).{13,}$",
+          "example": "fsdfsd2+65ffds"
+        },
+        "pseudo": {
+          "type": "string",
+          "description": "The user pseudo",
+          "example": "DilidoMaster"
+        },
+        "admin": {
+          "type": "boolean",
+          "description": "set if user is an admin or not",
+          "example": true
         }
       },
       "required": [
         "name",
-        "age"
+        "email",
+        "password",
+        "admin"
       ]
     }
   }

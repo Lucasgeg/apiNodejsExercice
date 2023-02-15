@@ -21,8 +21,8 @@
     "swagger-ui-express": "^4.6.0"
   },
   "scripts": {
-    "start": "node app.js",
-    "swagger-autogen": "node utils/autogen-swagger.js"
+    "start": "node utils/autogen-swagger.js",
+    "swagger": "utils/autogen-swagger.js"
   },
   "devDependencies": {
     "nodemon": "^2.0.20"

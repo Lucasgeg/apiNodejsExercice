@@ -1,16 +1,16 @@
 const swaggerAutogen = require("swagger-autogen")();
-
+const userSchema = require("../schemas/user");
 const outputFile = "./swagger_output.json";
 const endpoints = ["routes/auth.js", "routes/menus.js"];
 
 const doc = {
   info: {
     version: "3.0.0",
-    title: "Cars API documentation",
-    description: "Documentation of Cars API",
+    title: "Menus API documentation",
+    description: "Documentation of MenusAPI",
     termsOfService: "http://swagger.io/terms/",
     contact: {
-      email: "contact@cars-api.com",
+      email: "contact@toto.com",
     },
     license: {
       name: "Apache 2.0",
@@ -35,37 +35,8 @@ const doc = {
       in: "header",
     },
   },
-  tags: [
-    {
-      name: "User",
-      description: "Endpoints",
-    },
-  ],
-  definitions: {
-    User: {
-      name: "Jhon Doe",
-      age: 29,
-      parents: {
-        father: "Simon Doe",
-        mother: "Marie Doe",
-      },
-      diplomas: [
-        {
-          school: "XYZ University",
-          year: 2020,
-          completed: true,
-          internship: {
-            hours: 290,
-            location: "XYZ Company",
-          },
-        },
-      ],
-    },
-    AddUser: {
-      $name: "Jhon Doe",
-      $age: 29,
-      about: "",
-    },
+  "@definitions": {
+    AddUser: userSchema,
   },
 };
 
