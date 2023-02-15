@@ -83,22 +83,11 @@ exports.login = async (req, res) => {
           id: userData.id,
           admin: userData.admin,
         });
-        res.cookie("jwt", jwt, {
-          httpOnly: true,
-        });
-        res.cookie("refresh_token", refreshJwt, {
-          httpOnly: true,
-        });
         return res.status(200).send({
           message: "you are connected!",
           id: userData.id,
           jwt,
-          refreshToken: generateRefreshToken({
-            email: userData.email,
-            firstName: userData.firstName,
-            id: userData.id,
-            admin: userData.admin,
-          }),
+          refreshJwt,
         });
       }
       return res.status(403).send({ error: "Invalid password or email :'(" });
