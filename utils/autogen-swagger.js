@@ -1,6 +1,7 @@
 const swaggerAutogen = require("swagger-autogen")();
 
 const outputFile = "./swagger_output.json";
+const endpoints = ["routes/auth.js", "routes/menus.js"];
 
 const doc = {
   info: {
@@ -18,10 +19,10 @@ const doc = {
   },
   servers: [
     {
-      url: "http://localhost:8080/menusapi/api/v1/",
+      url: "http://localhost:8081/menusapi/api/v1/",
     },
   ],
-  host: "localhost:8080/menusapi/api/v1",
+  host: "localhost:8081/menusapi/api/v1",
   basePath: "/",
   consumes: ["application/json"],
   produces: ["application/json"],
@@ -67,3 +68,7 @@ const doc = {
     },
   },
 };
+
+swaggerAutogen(outputFile, endpoints, doc).then(() => {
+  require("../app");
+});

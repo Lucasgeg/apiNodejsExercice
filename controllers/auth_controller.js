@@ -28,6 +28,9 @@ const generateRefreshToken = (data) => {
 };
 
 exports.register = async (req, res) => {
+  // #swagger.tags = ['Auth']
+  // #swagger.description = 'Service to register a new user for the menu API';
+  // #swagger.summary = "Service to register a new user";
   const data = req.body;
   if (!isValid(userSchema, req.body))
     return res.status(403).send({ message: "invalid" });
@@ -58,6 +61,9 @@ exports.register = async (req, res) => {
   return;
 };
 exports.login = async (req, res) => {
+  // #swagger.tags = ['Auth']
+  // #swagger.description = 'Service to login a user into menuAPI';
+  // #swagger.summary = "Service to log a  user";
   const { email, password } = req.body;
   const user = fireStore.collection("Users").where("email", "==", email);
 
@@ -98,6 +104,9 @@ exports.login = async (req, res) => {
   });
 };
 exports.me = (req, res) => {
+  // #swagger.tags = ['Auth']
+  // #swagger.description = 'Service to get information about current  user';
+  // #swagger.summary = "Service tto get information";
   const user = req.user;
 
   if (user.admin) return res.status(200).send({ message: "admin you are" });

@@ -5,12 +5,12 @@ const dotenv = require("dotenv"),
   morgan = require("morgan"),
   bodyParser = require("body-parser"),
   cookieParser = require("cookie-parser"),
-  swaggerUi = require("swagger-ui-express");
+  swaggerUi = require("swagger-ui-express"),
+  swaggerFile = require("./swagger_output.json");
 const { specs } = require("./utils/swagger");
 dotenv.config();
 const app = express();
 const port = process.env.PORT || 8080;
-
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser());
@@ -28,8 +28,10 @@ require("./routes/auth")(app);
 require("./routes/menus")(app);
 
 // require("./utils/swagger")
-app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(specs));
+app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerFile));
 
 app.listen(port, () => {
-  console.log("server listen on port " + port);
+  process.env.ENVIRONMENT === "development"
+    ? console.log("check the url http://localhost://" + port + "/api-docs")
+    : console.log("listen on port:" + port);
 });
