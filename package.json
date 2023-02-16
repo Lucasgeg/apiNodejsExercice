@@ -18,7 +18,8 @@
     "morgan": "^1.10.0",
     "swagger-autogen": "^2.23.1",
     "swagger-jsdoc": "^6.2.8",
-    "swagger-ui-express": "^4.6.0"
+    "swagger-ui-express": "^4.6.0",
+    "yamljs": "^0.3.0"
   },
   "scripts": {
     "start": "node utils/autogen-swagger.js",

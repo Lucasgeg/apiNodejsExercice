@@ -11,3 +11,13 @@ exports.docExist = async (collection, id) => {
   if (!doc.exists) return false;
   return doc;
 };
+
+exports.formatData = (datas) => {
+  const formattedData = {};
+  for (const [key, value] of Object.entries(datas)) {
+    typeof value === "string"
+      ? (formattedData[key] = value.toLowerCase().trim())
+      : (formattedData[key] = value);
+  }
+  return formattedData;
+};

@@ -6,7 +6,7 @@ const dotenv = require("dotenv"),
   bodyParser = require("body-parser"),
   cookieParser = require("cookie-parser"),
   swaggerUi = require("swagger-ui-express"),
-  swaggerFile = require("./swagger_output.json");
+  swaggerFile = require("./schemas/swagger.json");
 dotenv.config();
 const app = express();
 const port = process.env.PORT || 8080;

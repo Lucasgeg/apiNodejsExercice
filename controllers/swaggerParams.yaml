@@ -1,0 +1,31 @@
+   swagger.tags = ['Auth']
+   swagger.description = 'Service to register a new user for the menu API';
+   swagger.summary = "Service to register a new user";
+   swagger.responses[200] = {
+                description: 'Registration is succesfull',
+                schema: {
+    "message": "Successfully added! You can now connect to your account",
+    "Informations": {
+        "datas": "object with user information formatted"
+    }
+   }
+   }
+   swagger.responses[403] = {
+                description: 'Registration is impossible',
+                schema: {
+    "message1": "Invalid or insufficient data for registration",
+    "message2": "User allready exist"
+   }
+  } 
+   swagger.responses[500] = {
+                description: 'Server Error',
+                schema: {
+    "message": "Internal server error",
+   }
+  } 
+   swagger.parameters['obj'] = {
+        in: 'body',
+        description: 'user Signin information',
+        schema: { $ref: "#/definitions/AddUser" }
+   }
+  } 

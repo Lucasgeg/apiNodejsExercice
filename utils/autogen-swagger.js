@@ -1,6 +1,6 @@
 const swaggerAutogen = require("swagger-autogen")();
 const userSchema = require("../schemas/user");
-const outputFile = "./swagger_output.json";
+const outputFile = "schemas/swagger.json";
 const endpoints = ["routes/auth.js", "routes/menus.js"];
 
 const doc = {

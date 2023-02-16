@@ -3,7 +3,7 @@ const fireStore = require("../firebase-config");
 const bcrypt = require("bcrypt");
 const salt = 10;
 const jwt = require("jsonwebtoken");
-const { isValid } = require("../utils/basics");
+const { isValid, formatData } = require("../utils/basics");
 
 const userSchema = require("../schemas/user");
 
@@ -31,23 +31,48 @@ exports.register = async (req, res) => {
   /* #swagger.tags = ['Auth']
    #swagger.description = 'Service to register a new user for the menu API';
    #swagger.summary = "Service to register a new user";
+   #swagger.responses[200] = {
+                description: 'Registration is succesfull',
+                schema: {
+    "message": "Successfully added! You can now connect to your account",
+    "Informations": {
+        "datas": "object with user information formatted"
+    }
+   }
+  } 
+   #swagger.responses[403] = {
+                description: 'Registration is impossible',
+                schema: {
+    "message1": "Invalid or insufficient data for registration",
+    "message2": "User allready exist"
+   }
+  } 
+   #swagger.responses[500] = {
+                description: 'Server Error',
+                schema: {
+    "message": "Internal server error",
+   }
+  } 
    #swagger.parameters['obj'] = {
         in: 'body',
         description: 'user Signin information',
         schema: { $ref: "#/definitions/AddUser" }
    }
-  } */
+  } 
+  */
   const data = req.body;
   if (!isValid(userSchema, req.body))
-    return res.status(403).send({ message: "invalid" });
+    return res
+      .status(403)
+      .send({ message: "Invalid or insufficient data for registration" });
   if (await userAllreadyExist(req.body.email))
-    return res.status(403).send({ message: "user allready exist" });
+    return res.status(403).send({ message: "User allready exist" });
 
-  bcrypt.hash(req.body.password, salt, (err, hashPassword) => {
+  return bcrypt.hash(req.body.password, salt, (err, hashPassword) => {
     fireStore
       .collection("Users")
       .add({
-        ...data,
+        ...formatData(data),
         password: hashPassword,
       })
       .then((docRef) => {
@@ -64,9 +89,9 @@ exports.register = async (req, res) => {
         res.status(500).send({ message: "what's happening?" });
       });
   });
-  return;
 };
 exports.login = async (req, res) => {
+  // todo: example value et response
   // #swagger.tags = ['Auth']
   // #swagger.description = 'Service to login a user into menuAPI';
   // #swagger.summary = "Service to log a  user";
@@ -86,7 +111,7 @@ exports.login = async (req, res) => {
   const userExist = (await user.get()).docs[0];
 
   if (!userExist)
-    return res.status(403).send({ error: "Invalid password or email :'(" });
+    return res.status(404).send({ error: "Invalid password or email :'(" });
 
   const userData = userExist.data();
   console.log(userData);
@@ -112,7 +137,7 @@ exports.login = async (req, res) => {
           refreshJwt,
         });
       }
-      return res.status(403).send({ error: "Invalid password or email :'(" });
+      return res.status(404).send({ error: "Invalid password or email :'(" });
     } catch (error) {
       console.log(error);
       return res.status(500).send({ error: "what's happening here!" });
@@ -120,6 +145,8 @@ exports.login = async (req, res) => {
   });
 };
 exports.me = (req, res) => {
+  // todo: example value et response
+
   // #swagger.tags = ['Auth']
   // #swagger.description = 'Service to get information about current  user';
   // #swagger.summary = "Service to get information";

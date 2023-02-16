@@ -56,7 +56,66 @@
             }
           }
         ],
-        "responses": {}
+        "responses": {
+          "200": {
+            "description": "Registration is succesfull",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string",
+                  "example": "Successfully added! You can now connect to your account"
+                },
+                "Informations": {
+                  "type": "object",
+                  "properties": {
+                    "datas": {
+                      "type": "string",
+                      "example": "object with user information formatted"
+                    }
+                  }
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
+          },
+          "403": {
+            "description": "Registration is impossible",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message1": {
+                  "type": "string",
+                  "example": "Invalid or insufficient data for registration"
+                },
+                "message2": {
+                  "type": "string",
+                  "example": "User allready exist"
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
+          },
+          "500": {
+            "description": "Server Error",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string",
+                  "example": "Internal server error"
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
+          }
+        }
       }
     },
     "/login": {
@@ -111,8 +170,8 @@
               }
             }
           },
-          "403": {
-            "description": "Forbidden"
+          "404": {
+            "description": "Not Found"
           },
           "500": {
             "description": "Internal Server Error"
@@ -328,29 +387,29 @@
         "name": {
           "type": "string",
           "description": "name of the user",
-          "example": "John Doe"
+          "default": "John Doe"
         },
         "email": {
           "type": "string",
           "pattern": "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+.[a-zA-Z]{2,}$",
           "description": "email of the user",
-          "example": "toto@gmail.com"
+          "default": "toto@gmail.com"
         },
         "password": {
           "type": "string",
           "description": "password of the user",
           "pattern": "^(?=.*[0-9]{3})(?=.*[!@#$%^&*]{2}).{13,}$",
-          "example": "fsdfsd2+65ffds"
+          "default": "fsdfsd2+65ffds"
         },
         "pseudo": {
           "type": "string",
           "description": "The user pseudo",
-          "example": "DilidoMaster"
+          "default": "DilidoMaster"
         },
         "admin": {
           "type": "boolean",
           "description": "set if user is an admin or not",
-          "example": true
+          "default": true
         }
       },
       "required": [
