@@ -9,7 +9,6 @@ module.exports = (app) => {
 
   router.post("/login", auth.login);
   router.get("/me", authenticateToken, auth.me);
-
   app.use(cookieParser());
   app.use("/menusapi/api/v1", router);
 };

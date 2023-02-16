@@ -3,9 +3,31 @@ const { isValid, docExist: itExist, docExist } = require("../utils/basics");
 const menusSchema = require("../schemas/menus");
 
 exports.read = async (req, res) => {
-  // #swagger.tags = ['Menus']
-  // #swagger.description = 'Service to get all menus from the database';
-  // #swagger.summary = "Service to get all menus from the database";
+  /* #swagger.tags = ['Menus']
+   #swagger.description = 'Service to get all menus from the database';
+   #swagger.summary = "Service to get all menus from the database";
+   #swagger.responses[200] = {
+    description: 'return a list of all menus',
+    schema: {
+        type: 'array',
+        items: {
+            $ref: '#/definitions/AddMenus'
+        }
+    }
+}
+   #swagger.responses[404] = {
+                description: 'Login fail',
+                schema: {
+                  "message": "User or password incorrect"
+   }
+  } 
+   #swagger.responses[500] = {
+                description: 'Server Error',
+                schema: {
+    "message": "Internal server error",
+   }
+  } 
+  */
   try {
     const menusList = await firestore.collection("Menus").get();
     return res.status(200).json(menusList.docs.map((doc) => doc.data()));

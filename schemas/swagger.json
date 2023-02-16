@@ -394,12 +394,7 @@
               }
             }
           }
-        },
-        "security": [
-          {
-            "bearerAuth": []
-          }
-        ]
+        }
       }
     },
     "/menus": {
@@ -420,13 +415,112 @@
         ],
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "return a list of all menus",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "type": {
+                      "type": "string",
+                      "example": "array"
+                    },
+                    "items": {
+                      "$ref": "#/components/schemas/AddMenus"
+                    }
+                  },
+                  "xml": {
+                    "name": "main"
+                  }
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "type": {
+                      "type": "string",
+                      "example": "array"
+                    },
+                    "items": {
+                      "$ref": "#/components/schemas/AddMenus"
+                    }
+                  },
+                  "xml": {
+                    "name": "main"
+                  }
+                }
+              }
+            }
           },
           "401": {
             "description": "Unauthorized"
           },
+          "404": {
+            "description": "Login fail",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "User or password incorrect"
+                    }
+                  },
+                  "xml": {
+                    "name": "main"
+                  }
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "User or password incorrect"
+                    }
+                  },
+                  "xml": {
+                    "name": "main"
+                  }
+                }
+              }
+            }
+          },
           "500": {
-            "description": "Internal Server Error"
+            "description": "Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Internal server error"
+                    }
+                  },
+                  "xml": {
+                    "name": "main"
+                  }
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Internal server error"
+                    }
+                  },
+                  "xml": {
+                    "name": "main"
+                  }
+                }
+              }
+            }
           }
         }
       }
@@ -629,15 +723,44 @@
           "password",
           "admin"
         ]
+      },
+      "AddMenus": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "default": "Axfdsf451dqDs"
+          },
+          "starter": {
+            "type": "string",
+            "default": "Salade de thon"
+          },
+          "main": {
+            "type": "string",
+            "default": "Tartare de boeuf bien cuit"
+          },
+          "dessert": {
+            "type": "string",
+            "default": "Soupe à l'oignon"
+          },
+          "price": {
+            "type": "number",
+            "default": 75.5
+          }
+        },
+        "required": [
+          "starter",
+          "main",
+          "dessert",
+          "price"
+        ]
       }
     },
     "securitySchemes": {
       "bearerAuth": {
-        "type": "apiKey",
-        "name": "authorization",
+        "type": "http",
         "scheme": "bearer",
-        "bearerFormat": "JWT",
-        "in": "header"
+        "bearerFormat": "JWT"
       }
     }
   }

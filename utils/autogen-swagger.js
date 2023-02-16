@@ -1,5 +1,7 @@
 const swaggerAutogen = require("swagger-autogen")({ openapi: "3.0.0" });
 const userSchema = require("../schemas/user");
+const menusSchema = require("../schemas/menus");
+
 const outputFile = "schemas/swagger.json";
 const endpoints = ["routes/auth.js", "routes/menus.js"];
 
@@ -28,15 +30,14 @@ const doc = {
   produces: ["application/json"],
   securityDefinitions: {
     bearerAuth: {
-      type: "apiKey",
-      name: "authorization",
+      type: "http",
       scheme: "bearer",
       bearerFormat: "JWT",
-      in: "header",
     },
   },
   "@definitions": {
     AddUser: userSchema,
+    AddMenus: menusSchema,
   },
 };
 

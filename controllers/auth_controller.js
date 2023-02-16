@@ -163,14 +163,10 @@ exports.login = async (req, res) => {
   });
 };
 exports.me = (req, res) => {
-  // todo: example value et response
-
   // #swagger.tags = ['Auth']
   // #swagger.description = 'Service to know if user is admin or not';
   // #swagger.summary = "Service to get information";
-  /* #swagger.security = [{
-        "bearerAuth": []
-  }];
+  /* 
     #swagger.responses[200] = {
                 description: 'Token is valid',
                 schema: {
