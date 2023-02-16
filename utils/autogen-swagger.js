@@ -1,11 +1,11 @@
-const swaggerAutogen = require("swagger-autogen")();
+const swaggerAutogen = require("swagger-autogen")({ openapi: "3.0.0" });
 const userSchema = require("../schemas/user");
 const outputFile = "schemas/swagger.json";
 const endpoints = ["routes/auth.js", "routes/menus.js"];
 
 const doc = {
   info: {
-    version: "3.0.0",
+    version: "1.0.0",
     title: "Menus API documentation",
     description: "Documentation of MenusAPI",
     termsOfService: "http://swagger.io/terms/",

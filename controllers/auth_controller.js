@@ -26,40 +26,39 @@ const generateRefreshToken = (data) => {
     expiresIn: 60 * 60 * 24 * 30,
   });
 };
-
 exports.register = async (req, res) => {
   /* #swagger.tags = ['Auth']
-   #swagger.description = 'Service to register a new user for the menu API';
-   #swagger.summary = "Service to register a new user";
-   #swagger.responses[200] = {
-                description: 'Registration is succesfull',
-                schema: {
-    "message": "Successfully added! You can now connect to your account",
-    "Informations": {
-        "datas": "object with user information formatted"
-    }
-   }
-  } 
-   #swagger.responses[403] = {
-                description: 'Registration is impossible',
-                schema: {
-    "message1": "Invalid or insufficient data for registration",
-    "message2": "User allready exist"
-   }
-  } 
-   #swagger.responses[500] = {
-                description: 'Server Error',
-                schema: {
-    "message": "Internal server error",
-   }
-  } 
-   #swagger.parameters['obj'] = {
-        in: 'body',
-        description: 'user Signin information',
-        schema: { $ref: "#/definitions/AddUser" }
-   }
-  } 
-  */
+     #swagger.description = 'Service to register a new user for the menu API';
+     #swagger.summary = "Service to register a new user";
+     #swagger.responses[200] = {
+                  description: 'Registration is succesfull',
+                  schema: {
+      "message": "Successfully added! You can now connect to your account",
+      "Informations": {
+          "datas": "object with user information formatted"
+      }
+     }
+    } 
+     #swagger.responses[403] = {
+                  description: 'Registration is impossible',
+                  schema: {
+      "message1": "Invalid or insufficient data for registration",
+      "message2": "User allready exist"
+     }
+    } 
+     #swagger.responses[500] = {
+                  description: 'Server Error',
+                  schema: {
+      "message": "Internal server error",
+     }
+    } 
+     #swagger.parameters['obj'] = {
+          in: 'body',
+          description: 'user Signin information',
+          schema: { $ref: "#/definitions/AddUser" }
+     }
+    } 
+    */
   const data = req.body;
   if (!isValid(userSchema, req.body))
     return res
@@ -91,20 +90,39 @@ exports.register = async (req, res) => {
   });
 };
 exports.login = async (req, res) => {
-  // todo: example value et response
-  // #swagger.tags = ['Auth']
-  // #swagger.description = 'Service to login a user into menuAPI';
-  // #swagger.summary = "Service to log a  user";
-  /* #swagger.responses[200] = {
-                description: 'Some description...',
+  /* #swagger.tags = ['Auth']
+   #swagger.description = 'Service to login';
+   #swagger.summary = "Service to login a user to the app";
+   #swagger.responses[200] = {
+                description: 'Login sucess',
                 schema: {
-    "message": "you are connected!",
-    "id": "DKeFxdgpRpHGfCKwNx7D",
+    "message": "Successfully connected!",
     "jwt": "A very long token",
-    "refreshJwt": "An other very long token!"
-}
-        } */
-
+    "refresh_jwt": "An other long token"
+   }
+  } 
+   #swagger.responses[404] = {
+                description: 'Login fail',
+                schema: {
+                  "message": "User or password incorrect"
+   }
+  } 
+   #swagger.responses[500] = {
+                description: 'Server Error',
+                schema: {
+    "message": "Internal server error",
+   }
+  } 
+   #swagger.parameters['obj'] = {
+        in: 'body',
+        description: 'user Signin information',
+        schema: { 
+            email: "Jhonny-Bravo@boo.bzh",
+            password: "---AbraKadabra4lakazam---"
+         }
+   }
+  } 
+  */
   const { email, password } = req.body;
   const user = fireStore.collection("Users").where("email", "==", email);
 
@@ -148,11 +166,25 @@ exports.me = (req, res) => {
   // todo: example value et response
 
   // #swagger.tags = ['Auth']
-  // #swagger.description = 'Service to get information about current  user';
+  // #swagger.description = 'Service to know if user is admin or not';
   // #swagger.summary = "Service to get information";
   /* #swagger.security = [{
-    "bearerAuth": []
-}]  */
+        "bearerAuth": []
+  }];
+    #swagger.responses[200] = {
+                description: 'Token is valid',
+                schema: {
+        "message1": "Admin you are",
+        "message2": "Hey friend! you're not an admin but you can do some request ;-)"
+   }
+  } 
+  #swagger.responses[401] = {
+                description: 'Unauthorized',
+                schema: {
+    "error": "Your rights are revoked."
+}
+  } 
+ */
   const user = req.user;
 
   if (user.admin) return res.status(200).send({ message: "admin you are" });
