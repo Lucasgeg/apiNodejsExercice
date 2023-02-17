@@ -116,14 +116,11 @@ exports.login = async (req, res) => {
    #swagger.parameters['obj'] = {
         in: 'body',
         description: 'user Signin information',
-        schema: { 
-            "email": "totiu@gmail.com",
-    "password": "toto123%%reat"
-         }
+          schema: { $ref: "#/definitions/Login" }
    }
   } 
   */
-  const { email, password } = req.body;
+  const { email, password } = await req.body;
   const user = fireStore.collection("Users").where("email", "==", email);
 
   const userExist = (await user.get()).docs[0];
