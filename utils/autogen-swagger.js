@@ -21,11 +21,10 @@ const doc = {
   },
   servers: [
     {
-      url: "http://localhost:8081/menusapi/api/v1/",
+      url: "https://localhost:8081/menusapi/api/v1/",
     },
   ],
-  host: "localhost:8081",
-  basePath: "/menusapi/api/v1",
+  host: "/",
   consumes: ["application/json"],
   produces: ["application/json"],
   securityDefinitions: {

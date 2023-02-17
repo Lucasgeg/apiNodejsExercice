@@ -117,8 +117,8 @@ exports.login = async (req, res) => {
         in: 'body',
         description: 'user Signin information',
         schema: { 
-            email: "Jhonny-Bravo@boo.bzh",
-            password: "---AbraKadabra4lakazam---"
+            "email": "totiu@gmail.com",
+    "password": "toto123%%reat"
          }
    }
   } 

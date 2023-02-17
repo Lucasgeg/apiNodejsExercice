@@ -15,7 +15,7 @@
   },
   "servers": [
     {
-      "url": "http://localhost:8081/menusapi/api/v1/"
+      "url": "https://localhost:8081/menusapi/api/v1/"
     }
   ],
   "paths": {
@@ -182,11 +182,11 @@
               "properties": {
                 "email": {
                   "type": "string",
-                  "example": "Jhonny-Bravo@boo.bzh"
+                  "example": "totiu@gmail.com"
                 },
                 "password": {
                   "type": "string",
-                  "example": "---AbraKadabra4lakazam---"
+                  "example": "toto123%%reat"
                 }
               }
             }
