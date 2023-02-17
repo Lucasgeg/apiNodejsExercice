@@ -163,10 +163,12 @@ exports.login = async (req, res) => {
   });
 };
 exports.me = (req, res) => {
-  // #swagger.tags = ['Auth']
-  // #swagger.description = 'Service to know if user is admin or not';
-  // #swagger.summary = "Service to get information";
-  /* 
+  /* #swagger.tags = ['Auth']
+   #swagger.description = 'Please put the bearer token on the top of the request, not on the authorization input field';
+   #swagger.summary = "Service to know if user is an administrator";
+    #swagger.security = [{
+            "bearerAuth": []
+    }]
     #swagger.responses[200] = {
                 description: 'Token is valid',
                 schema: {

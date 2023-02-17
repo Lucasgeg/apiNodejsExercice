@@ -316,8 +316,8 @@
         "tags": [
           "Auth"
         ],
-        "summary": "Service to get information",
-        "description": "Service to know if user is admin or not",
+        "summary": "Service to know if user is an administrator",
+        "description": "Please put the bearer token on the top of the request, not on the authorization input field",
         "parameters": [
           {
             "name": "authorization",
@@ -394,7 +394,12 @@
               }
             }
           }
-        }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
       }
     },
     "/menus": {
@@ -426,7 +431,7 @@
                       "example": "array"
                     },
                     "items": {
-                      "$ref": "#/components/schemas/AddMenus"
+                      "$ref": "#/components/schemas/Menus"
                     }
                   },
                   "xml": {
@@ -443,7 +448,7 @@
                       "example": "array"
                     },
                     "items": {
-                      "$ref": "#/components/schemas/AddMenus"
+                      "$ref": "#/components/schemas/Menus"
                     }
                   },
                   "xml": {
@@ -455,39 +460,6 @@
           },
           "401": {
             "description": "Unauthorized"
-          },
-          "404": {
-            "description": "Login fail",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "message": {
-                      "type": "string",
-                      "example": "User or password incorrect"
-                    }
-                  },
-                  "xml": {
-                    "name": "main"
-                  }
-                }
-              },
-              "application/xml": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "message": {
-                      "type": "string",
-                      "example": "User or password incorrect"
-                    }
-                  },
-                  "xml": {
-                    "name": "main"
-                  }
-                }
-              }
-            }
           },
           "500": {
             "description": "Server Error",
@@ -522,7 +494,12 @@
               }
             }
           }
-        }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
       }
     },
     "/menus/{menuId}": {
@@ -555,6 +532,15 @@
           },
           "401": {
             "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
           }
         }
       }
@@ -724,7 +710,7 @@
           "admin"
         ]
       },
-      "AddMenus": {
+      "Menus": {
         "type": "object",
         "properties": {
           "id": {

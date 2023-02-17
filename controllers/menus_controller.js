@@ -6,21 +6,18 @@ exports.read = async (req, res) => {
   /* #swagger.tags = ['Menus']
    #swagger.description = 'Service to get all menus from the database';
    #swagger.summary = "Service to get all menus from the database";
+   #swagger.security = [{
+            "bearerAuth": []
+    }]
    #swagger.responses[200] = {
     description: 'return a list of all menus',
     schema: {
-        type: 'array',
+      type: 'array',
         items: {
-            $ref: '#/definitions/AddMenus'
+            $ref: '#/definitions/Menus'
         }
     }
 }
-   #swagger.responses[404] = {
-                description: 'Login fail',
-                schema: {
-                  "message": "User or password incorrect"
-   }
-  } 
    #swagger.responses[500] = {
                 description: 'Server Error',
                 schema: {
@@ -39,8 +36,16 @@ exports.read = async (req, res) => {
 
 exports.getOneMenu = async (req, res) => {
   // #swagger.tags = ['Menus']
+  //#swagger.security = [{
+  //  "bearerAuth": []
+  //}]
   // #swagger.description = 'Service to get one menu from the database';
   // #swagger.summary = "Service to get one menu from the database";
+  /* 
+    #swagger.responses[200]:{
+
+    }
+  */
   if (!req.params.menuId)
     return res
       .status(401)

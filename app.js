@@ -26,8 +26,17 @@ require("./routes/auth")(app);
 // routes for get/post/update/delete menus
 require("./routes/menus")(app);
 
+const options = {
+  explorer: true,
+  swaggerOptions: {
+    docExpansion: "none",
+    persistAuthorization: true,
+  },
+  customCssUrl:
+    "https://cdn.jsdelivr.net/npm/swagger-ui-themes@3.0.0/themes/3.x/theme-outline.css",
+};
 // require("./utils/swagger")
-app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerFile));
+app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerFile, options));
 
 app.listen(port, () => {
   process.env.ENVIRONMENT === "development"

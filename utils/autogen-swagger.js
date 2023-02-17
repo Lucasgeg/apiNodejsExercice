@@ -24,8 +24,8 @@ const doc = {
       url: "http://localhost:8081/menusapi/api/v1/",
     },
   ],
-  host: "localhost:8081/menusapi/api/v1",
-  basePath: "/",
+  host: "localhost:8081",
+  basePath: "/menusapi/api/v1",
   consumes: ["application/json"],
   produces: ["application/json"],
   securityDefinitions: {
@@ -37,7 +37,7 @@ const doc = {
   },
   "@definitions": {
     AddUser: userSchema,
-    AddMenus: menusSchema,
+    Menus: menusSchema,
   },
 };
 
