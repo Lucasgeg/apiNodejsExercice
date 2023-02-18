@@ -38,7 +38,7 @@ exports.loginSchema = {
       type: "string",
       pattern: "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+.[a-zA-Z]{2,}$",
       description: "email of the user",
-      default: "totiu@gmail.com",
+      default: "illbeagodness@gmail.com",
     },
     password: {
       type: "string",

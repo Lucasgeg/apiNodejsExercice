@@ -1,8 +1,6 @@
 const firebaseAdmin = require("firebase-admin");
 const dotenv = require("dotenv");
 dotenv.config();
-const googleAuth = require("google-auth-library");
-const SCOPES = ["https://www.googleapis.com/auth/cloud-platform"];
 
 const firebaseConfig = {
   type: process.env.TYPE,
@@ -22,16 +20,5 @@ firebaseAdmin.initializeApp({
 });
 
 const db = firebaseAdmin.firestore();
-
-async function getAccessToken() {
-  const jwtClient = new googleAuth.JWT(
-    firebaseConfig.client_email,
-    null,
-    firebaseConfig.private_key,
-    SCOPES,
-    null
-  );
-  return jwtClient.authorize().then((tokens) => tokens.access_token);
-}
 
 module.exports = db;

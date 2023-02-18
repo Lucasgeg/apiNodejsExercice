@@ -1,6 +1,6 @@
 const swaggerAutogen = require("swagger-autogen");
 const { loginSchema, userRegistrationSchema } = require("../schemas/user");
-const menuSchema = require("../schemas/menus");
+const { menusSchema, updateMenuSchema } = require("../schemas/menus");
 
 const outputFile = "schemas/swagger.json";
 const endpoints = ["routes/auth.js", "routes/menus.js"];
@@ -34,15 +34,15 @@ const doc = {
       name: "authorization",
       scheme: "bearer",
       bearerFormat: "JWT",
-      in: "header",
+      description:
+        "Put here your JWT with bearer writed before, eg: 'bearer jwt' ",
     },
   },
-
-  // securityDefinitions: {},
   "@definitions": {
     AddUser: userRegistrationSchema,
     Login: loginSchema,
-    Menus: menuSchema,
+    Menus: menusSchema,
+    MenuUpdate: updateMenuSchema,
   },
 };
 

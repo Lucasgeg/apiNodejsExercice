@@ -2,30 +2,16 @@ const fireStore = require("../firebase-config");
 
 const bcrypt = require("bcrypt");
 const salt = 10;
-const jwt = require("jsonwebtoken");
-const { isValid, formatData } = require("../utils/basics");
-
+const {
+  isValid,
+  formatData,
+  generateAccessToken,
+  generateRefreshToken,
+  userAlreadyExists,
+} = require("../utils/basics");
 const { userRegistrationSchema } = require("../schemas/user");
+const { ERROR_MESSAGES, COLLECTIONS } = require("../utils/enum");
 
-const userAllreadyExist = async (email) => {
-  const user = await fireStore.collection("Users").where("email", "==", email);
-
-  const userData = (await user.get()).docs[0];
-
-  return userData ? true : false;
-};
-
-const generateAccessToken = (data) => {
-  return jwt.sign(data, process.env.JWT_SECRET, {
-    expiresIn: 60 * 30,
-  });
-};
-
-const generateRefreshToken = (data) => {
-  return jwt.sign(data, process.env.REFRESH_TOKEN_SECRET, {
-    expiresIn: 60 * 60 * 24 * 30,
-  });
-};
 exports.register = async (req, res) => {
   /* #swagger.tags = ['Auth']
      #swagger.description = 'Service to register a new user for the menu API';
@@ -60,34 +46,34 @@ exports.register = async (req, res) => {
     } 
     */
   const data = req.body;
-  if (!(await isValid(userRegistrationSchema, req.body)))
+  const { email, password } = data;
+  if (!(await isValid(userRegistrationSchema, data)))
     return res
       .status(403)
       .send({ message: "Invalid or insufficient data for registration" });
-  if (await userAllreadyExist(req.body.email))
+
+  if (await userAlreadyExists(email))
     return res.status(403).send({ message: "User allready exist" });
 
-  return bcrypt.hash(req.body.password, salt, (err, hashPassword) => {
-    fireStore
-      .collection("Users")
-      .add({
-        ...formatData(data),
-        password: hashPassword,
-      })
-      .then((docRef) => {
-        console.log("docRef:", docRef.id);
-        fireStore.collection("Users").doc(docRef.id).update({
-          id: docRef.id,
-        });
-        return res.status(200).send({
-          message: "Successfully added! You can now connect to your account",
-        });
-      })
-      .catch((err) => {
-        console.log(err);
-        res.status(500).send({ message: "what's happening?" });
-      });
-  });
+  const hashPassword = await bcrypt.hash(password, salt);
+
+  try {
+    const userRef = await fireStore.collection(COLLECTIONS.USERS).add({
+      ...formatData(data),
+      password: hashPassword,
+    });
+
+    await userRef.update({
+      id: userRef.id,
+    });
+
+    return res.status(200).send({
+      message: "Successfully added! You can now connect to your account",
+    });
+  } catch (error) {
+    console.error(error);
+    return res.status(500).send({ message: ERROR_MESSAGES.SERVER_ERROR });
+  }
 };
 exports.login = async (req, res) => {
   /* #swagger.tags = ['Auth']
@@ -122,42 +108,42 @@ exports.login = async (req, res) => {
   */
   const { email, password } = await req.body;
   const user = fireStore.collection("Users").where("email", "==", email);
-
+  const errorMessage = "Invalid password or email :'(";
   const userExist = (await user.get()).docs[0];
 
-  if (!userExist)
-    return res.status(404).send({ error: "Invalid password or email :'(" });
+  if (!userExist) return res.status(404).send({ error: errorMessage });
 
   const userData = userExist.data();
   console.log(userData);
-  bcrypt.compare(password, userData.password, (err, correct) => {
-    try {
-      if (correct) {
-        const refreshJwt = generateRefreshToken({
-          email: userData.email,
-          firstName: userData.firstName,
-          id: userData.id,
-          admin: userData.admin,
-        });
-        const jwt = generateAccessToken({
-          email: userData.email,
-          firstName: userData.firstName,
-          id: userData.id,
-          admin: userData.admin,
-        });
-        return res.status(200).send({
-          message: "you are connected!",
-          id: userData.id,
-          jwt,
-          refreshJwt,
-        });
-      }
-      return res.status(404).send({ error: "Invalid password or email :'(" });
-    } catch (error) {
-      console.log(error);
-      return res.status(500).send({ error: "what's happening here!" });
+  try {
+    const correct = await bcrypt.compare(password, userData.password);
+
+    if (correct) {
+      const refreshJwt = generateRefreshToken({
+        email: userData.email,
+        firstName: userData.firstName,
+        id: userData.id,
+        admin: userData.admin,
+      });
+      const jwt = generateAccessToken({
+        email: userData.email,
+        firstName: userData.firstName,
+        id: userData.id,
+        admin: userData.admin,
+      });
+      return res.status(200).send({
+        message: "you are connected!",
+        id: userData.id,
+        jwt,
+        refreshJwt,
+      });
     }
-  });
+
+    return res.status(404).send({ error: errorMessage });
+  } catch (error) {
+    console.log(error);
+    return res.status(500).send({ error: "what's happening here!" });
+  }
 };
 exports.me = (req, res) => {
   /* #swagger.tags = ['Auth']
@@ -181,7 +167,9 @@ exports.me = (req, res) => {
   } 
  */
   const user = req.user;
-
+  if (!user) {
+    return res.status(401).send({ error: "Unauthorized" });
+  }
   if (user.admin) return res.status(200).send({ message: "admin you are" });
   else
     return res.status(200).send({

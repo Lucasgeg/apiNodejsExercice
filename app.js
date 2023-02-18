@@ -4,7 +4,6 @@ const dotenv = require("dotenv"),
   helmet = require("helmet"),
   morgan = require("morgan"),
   bodyParser = require("body-parser"),
-  cookieParser = require("cookie-parser"),
   swaggerUi = require("swagger-ui-express"),
   swaggerFile = require("./schemas/swagger.json");
 dotenv.config();
