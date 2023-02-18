@@ -1,5 +1,5 @@
 {
-  "openapi": "3.0.0",
+  "swagger": "2.0",
   "info": {
     "version": "1.0.0",
     "title": "Menus API documentation",
@@ -13,10 +13,30 @@
       "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
     }
   },
+  "host": "localhost:8081/menusapi/api/v1",
   "servers": [
     {
       "url": "http://localhost:8081/menusapi/api/v1/"
     }
+  ],
+  "basePath": "/",
+  "schemes": [
+    "http"
+  ],
+  "securityDefinitions": {
+    "bearerAuth": {
+      "type": "apiKey",
+      "name": "authorization",
+      "scheme": "bearer",
+      "bearerFormat": "JWT",
+      "in": "header"
+    }
+  },
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
   ],
   "paths": {
     "/register": {
@@ -32,133 +52,66 @@
             "in": "body",
             "description": "user Signin information",
             "schema": {
-              "$ref": "#/components/schemas/AddUser"
+              "$ref": "#/definitions/AddUser"
             }
           }
         ],
         "responses": {
           "200": {
             "description": "Registration is succesfull",
-            "content": {
-              "application/json": {
-                "schema": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string",
+                  "example": "Successfully added! You can now connect to your account"
+                },
+                "Informations": {
                   "type": "object",
                   "properties": {
-                    "message": {
+                    "datas": {
                       "type": "string",
-                      "example": "Successfully added! You can now connect to your account"
-                    },
-                    "Informations": {
-                      "type": "object",
-                      "properties": {
-                        "datas": {
-                          "type": "string",
-                          "example": "object with user information formatted"
-                        }
-                      }
+                      "example": "object with user information formatted"
                     }
-                  },
-                  "xml": {
-                    "name": "main"
                   }
                 }
               },
-              "application/xml": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "message": {
-                      "type": "string",
-                      "example": "Successfully added! You can now connect to your account"
-                    },
-                    "Informations": {
-                      "type": "object",
-                      "properties": {
-                        "datas": {
-                          "type": "string",
-                          "example": "object with user information formatted"
-                        }
-                      }
-                    }
-                  },
-                  "xml": {
-                    "name": "main"
-                  }
-                }
+              "xml": {
+                "name": "main"
               }
             }
           },
           "403": {
             "description": "Registration is impossible",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "message1": {
-                      "type": "string",
-                      "example": "Invalid or insufficient data for registration"
-                    },
-                    "message2": {
-                      "type": "string",
-                      "example": "User allready exist"
-                    }
-                  },
-                  "xml": {
-                    "name": "main"
-                  }
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message1": {
+                  "type": "string",
+                  "example": "Invalid or insufficient data for registration"
+                },
+                "message2": {
+                  "type": "string",
+                  "example": "User allready exist"
                 }
               },
-              "application/xml": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "message1": {
-                      "type": "string",
-                      "example": "Invalid or insufficient data for registration"
-                    },
-                    "message2": {
-                      "type": "string",
-                      "example": "User allready exist"
-                    }
-                  },
-                  "xml": {
-                    "name": "main"
-                  }
-                }
+              "xml": {
+                "name": "main"
               }
             }
           },
           "500": {
             "description": "Server Error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "message": {
-                      "type": "string",
-                      "example": "Internal server error"
-                    }
-                  },
-                  "xml": {
-                    "name": "main"
-                  }
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string",
+                  "example": "Internal server error"
                 }
               },
-              "application/xml": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "message": {
-                      "type": "string",
-                      "example": "Internal server error"
-                    }
-                  },
-                  "xml": {
-                    "name": "main"
-                  }
-                }
+              "xml": {
+                "name": "main"
               }
             }
           }
@@ -176,125 +129,63 @@
           {
             "name": "obj",
             "in": "body",
-            "description": "user Signin information",
+            "description": "user login information",
             "schema": {
-              "$ref": "#/components/schemas/Login"
+              "$ref": "#/definitions/Login"
             }
           }
         ],
         "responses": {
           "200": {
             "description": "Login sucess",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "message": {
-                      "type": "string",
-                      "example": "Successfully connected!"
-                    },
-                    "jwt": {
-                      "type": "string",
-                      "example": "A very long token"
-                    },
-                    "refresh_jwt": {
-                      "type": "string",
-                      "example": "An other long token"
-                    }
-                  },
-                  "xml": {
-                    "name": "main"
-                  }
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string",
+                  "example": "Successfully connected!"
+                },
+                "jwt": {
+                  "type": "string",
+                  "example": "A very long token"
+                },
+                "refresh_jwt": {
+                  "type": "string",
+                  "example": "An other long token"
                 }
               },
-              "application/xml": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "message": {
-                      "type": "string",
-                      "example": "Successfully connected!"
-                    },
-                    "jwt": {
-                      "type": "string",
-                      "example": "A very long token"
-                    },
-                    "refresh_jwt": {
-                      "type": "string",
-                      "example": "An other long token"
-                    }
-                  },
-                  "xml": {
-                    "name": "main"
-                  }
-                }
+              "xml": {
+                "name": "main"
               }
             }
           },
           "404": {
             "description": "Login fail",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "message": {
-                      "type": "string",
-                      "example": "User or password incorrect"
-                    }
-                  },
-                  "xml": {
-                    "name": "main"
-                  }
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string",
+                  "example": "User or password incorrect"
                 }
               },
-              "application/xml": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "message": {
-                      "type": "string",
-                      "example": "User or password incorrect"
-                    }
-                  },
-                  "xml": {
-                    "name": "main"
-                  }
-                }
+              "xml": {
+                "name": "main"
               }
             }
           },
           "500": {
             "description": "Server Error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "message": {
-                      "type": "string",
-                      "example": "Internal server error"
-                    }
-                  },
-                  "xml": {
-                    "name": "main"
-                  }
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string",
+                  "example": "Internal server error"
                 }
               },
-              "application/xml": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "message": {
-                      "type": "string",
-                      "example": "Internal server error"
-                    }
-                  },
-                  "xml": {
-                    "name": "main"
-                  }
-                }
+              "xml": {
+                "name": "main"
               }
             }
           }
@@ -312,75 +203,37 @@
           {
             "name": "authorization",
             "in": "header",
-            "schema": {
-              "type": "string"
-            }
+            "type": "string"
           }
         ],
         "responses": {
           "200": {
             "description": "Token is valid",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    " ": {
-                      "type": "string",
-                      "example": "Hey friend! you're not an admin but you can do some request ;-)"
-                    }
-                  },
-                  "xml": {
-                    "name": "main"
-                  }
+            "schema": {
+              "type": "object",
+              "properties": {
+                " ": {
+                  "type": "string",
+                  "example": "Hey friend! you're not an admin but you can do some request ;-)"
                 }
               },
-              "application/xml": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    " ": {
-                      "type": "string",
-                      "example": "Hey friend! you're not an admin but you can do some request ;-)"
-                    }
-                  },
-                  "xml": {
-                    "name": "main"
-                  }
-                }
+              "xml": {
+                "name": "main"
               }
             }
           },
           "401": {
             "description": "Unauthorized",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "error": {
-                      "type": "string",
-                      "example": "Your rights are revoked."
-                    }
-                  },
-                  "xml": {
-                    "name": "main"
-                  }
+            "schema": {
+              "type": "object",
+              "properties": {
+                "error": {
+                  "type": "string",
+                  "example": "Your rights are revoked."
                 }
               },
-              "application/xml": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "error": {
-                      "type": "string",
-                      "example": "Your rights are revoked."
-                    }
-                  },
-                  "xml": {
-                    "name": "main"
-                  }
-                }
+              "xml": {
+                "name": "main"
               }
             }
           }
@@ -403,48 +256,25 @@
           {
             "name": "authorization",
             "in": "header",
-            "schema": {
-              "type": "string"
-            }
+            "type": "string"
           }
         ],
         "responses": {
           "200": {
             "description": "return a list of all menus",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "type": {
-                      "type": "string",
-                      "example": "array"
-                    },
-                    "items": {
-                      "$ref": "#/components/schemas/Menus"
-                    }
-                  },
-                  "xml": {
-                    "name": "main"
-                  }
+            "schema": {
+              "type": "object",
+              "properties": {
+                "type": {
+                  "type": "string",
+                  "example": "array"
+                },
+                "items": {
+                  "$ref": "#/definitions/Menus"
                 }
               },
-              "application/xml": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "type": {
-                      "type": "string",
-                      "example": "array"
-                    },
-                    "items": {
-                      "$ref": "#/components/schemas/Menus"
-                    }
-                  },
-                  "xml": {
-                    "name": "main"
-                  }
-                }
+              "xml": {
+                "name": "main"
               }
             }
           },
@@ -453,34 +283,16 @@
           },
           "500": {
             "description": "Server Error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "message": {
-                      "type": "string",
-                      "example": "Internal server error"
-                    }
-                  },
-                  "xml": {
-                    "name": "main"
-                  }
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string",
+                  "example": "Internal server error"
                 }
               },
-              "application/xml": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "message": {
-                      "type": "string",
-                      "example": "Internal server error"
-                    }
-                  },
-                  "xml": {
-                    "name": "main"
-                  }
-                }
+              "xml": {
+                "name": "main"
               }
             }
           }
@@ -504,16 +316,12 @@
             "name": "menuId",
             "in": "path",
             "required": true,
-            "schema": {
-              "type": "string"
-            }
+            "type": "string"
           },
           {
             "name": "authorization",
             "in": "header",
-            "schema": {
-              "type": "string"
-            }
+            "type": "string"
           }
         ],
         "responses": {
@@ -546,9 +354,7 @@
           {
             "name": "authorization",
             "in": "header",
-            "schema": {
-              "type": "string"
-            }
+            "type": "string"
           }
         ],
         "responses": {
@@ -578,8 +384,18 @@
           {
             "name": "authorization",
             "in": "header",
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
             "schema": {
-              "type": "string"
+              "type": "object",
+              "properties": {
+                "menuId": {
+                  "example": "any"
+                }
+              }
             }
           }
         ],
@@ -595,20 +411,6 @@
           },
           "500": {
             "description": "Internal Server Error"
-          }
-        },
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "menuId": {
-                    "example": "any"
-                  }
-                }
-              }
-            }
           }
         }
       }
@@ -624,8 +426,18 @@
           {
             "name": "authorization",
             "in": "header",
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
             "schema": {
-              "type": "string"
+              "type": "object",
+              "properties": {
+                "id": {
+                  "example": "any"
+                }
+              }
             }
           }
         ],
@@ -642,135 +454,100 @@
           "500": {
             "description": "Internal Server Error"
           }
-        },
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "id": {
-                    "example": "any"
-                  }
-                }
-              }
-            }
-          }
         }
       }
     }
   },
-  "components": {
-    "schemas": {
-      "AddUser": {
-        "type": "object",
-        "properties": {
-          "name": {
-            "type": "string",
-            "description": "name of the user",
-            "default": "John Doe"
-          },
-          "email": {
-            "type": "string",
-            "pattern": "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+.[a-zA-Z]{2,}$",
-            "description": "email of the user",
-            "default": "toto@gmail.com"
-          },
-          "password": {
-            "type": "string",
-            "description": "password of the user",
-            "pattern": "^(?=.*[0-9]{3})(?=.*[!@#$%^&*]{2}).{13,}$",
-            "default": "fsdfsd2+65ffds"
-          },
-          "pseudo": {
-            "type": "string",
-            "description": "The user pseudo",
-            "default": "DilidoMaster"
-          },
-          "admin": {
-            "type": "boolean",
-            "description": "set if user is an admin or not",
-            "default": true
-          }
+  "definitions": {
+    "AddUser": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "name of the user",
+          "default": "John Doe"
         },
-        "required": [
-          "name",
-          "email",
-          "password",
-          "admin"
-        ]
-      },
-      "Login": {
-        "type": "object",
-        "properties": {
-          "email": {
-            "type": "string",
-            "pattern": "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+.[a-zA-Z]{2,}$",
-            "description": "email of the user",
-            "default": "totiu@gmail.com"
-          },
-          "password": {
-            "type": "string",
-            "description": "password of the user",
-            "pattern": "^(?=.*[0-9]{3})(?=.*[!@#$%^&*]{2}).{13,}$",
-            "default": "toto123%%reat"
-          }
+        "email": {
+          "type": "string",
+          "pattern": "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+.[a-zA-Z]{2,}$",
+          "description": "email of the user",
+          "default": "toto@gmail.com"
         },
-        "required": [
-          "email",
-          "password"
-        ]
-      },
-      "Menus": {
-        "type": "object",
-        "properties": {
-          "id": {
-            "type": "string",
-            "default": "Axfdsf451dqDs"
-          },
-          "starter": {
-            "type": "string",
-            "default": "Salade de thon"
-          },
-          "main": {
-            "type": "string",
-            "default": "Tartare de boeuf bien cuit"
-          },
-          "dessert": {
-            "type": "string",
-            "default": "Soupe à l'oignon"
-          },
-          "price": {
-            "type": "number",
-            "default": 75.5
-          }
+        "password": {
+          "type": "string",
+          "description": "password of the user",
+          "pattern": "^(?=.*[0-9]{3})(?=.*[!@#$%^&*]{2}).{13,}$",
+          "default": "fsdfsd2+65ffds"
         },
-        "required": [
-          "starter",
-          "main",
-          "dessert",
-          "price"
-        ]
-      }
-    },
-    "securitySchemes": {
-      "bearerAuth": {
-        "type": "http",
-        "scheme": "bearer",
-        "bearerFormat": "JWT"
-      },
-      "OAuth2": {
-        "type": "oauth2",
-        "flows": {
-          "implicit": {
-            "authorizationUrl": "http://localhost:8081/oauth2/authorize",
-            "scopes": {
-              "read": "Grants read access",
-              "write": "Grants write access"
-            }
-          }
+        "pseudo": {
+          "type": "string",
+          "description": "The user pseudo",
+          "default": "DilidoMaster"
+        },
+        "admin": {
+          "type": "boolean",
+          "description": "set if user is an admin or not",
+          "default": true
         }
-      }
+      },
+      "required": [
+        "name",
+        "email",
+        "password",
+        "admin"
+      ]
+    },
+    "Login": {
+      "type": "object",
+      "properties": {
+        "email": {
+          "type": "string",
+          "pattern": "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+.[a-zA-Z]{2,}$",
+          "description": "email of the user",
+          "default": "totiu@gmail.com"
+        },
+        "password": {
+          "type": "string",
+          "description": "password of the user",
+          "pattern": "^(?=.*[0-9]{3})(?=.*[!@#$%^&*]{2}).{13,}$",
+          "default": "toto123%%reat"
+        }
+      },
+      "required": [
+        "email",
+        "password"
+      ]
+    },
+    "Menus": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "default": "Axfdsf451dqDs"
+        },
+        "starter": {
+          "type": "string",
+          "default": "Salade de thon"
+        },
+        "main": {
+          "type": "string",
+          "default": "Tartare de boeuf bien cuit"
+        },
+        "dessert": {
+          "type": "string",
+          "default": "Soupe à l'oignon"
+        },
+        "price": {
+          "type": "number",
+          "default": 75.5
+        }
+      },
+      "required": [
+        "starter",
+        "main",
+        "dessert",
+        "price"
+      ]
     }
   }
 }

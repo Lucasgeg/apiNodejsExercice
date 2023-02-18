@@ -5,14 +5,14 @@ const salt = 10;
 const jwt = require("jsonwebtoken");
 const { isValid, formatData } = require("../utils/basics");
 
-const userSchema = require("../schemas/user");
+const { userRegistrationSchema } = require("../schemas/user");
 
 const userAllreadyExist = async (email) => {
   const user = await fireStore.collection("Users").where("email", "==", email);
 
   const userData = (await user.get()).docs[0];
 
-  return Boolean(userData);
+  return userData ? true : false;
 };
 
 const generateAccessToken = (data) => {
@@ -60,7 +60,7 @@ exports.register = async (req, res) => {
     } 
     */
   const data = req.body;
-  if (!isValid(userSchema, req.body))
+  if (!(await isValid(userRegistrationSchema, req.body)))
     return res
       .status(403)
       .send({ message: "Invalid or insufficient data for registration" });
@@ -114,10 +114,10 @@ exports.login = async (req, res) => {
    }
   } 
    #swagger.parameters['obj'] = {
-        in: 'body',
-        description: 'user Signin information',
+          in: 'body',
+          description: 'user login information',
           schema: { $ref: "#/definitions/Login" }
-   }
+     }
   } 
   */
   const { email, password } = await req.body;

@@ -1,6 +1,6 @@
-const swaggerAutogen = require("swagger-autogen")({ openapi: "3.0.0" });
-const userSchema = require("../schemas/user");
-const menusSchema = require("../schemas/menus");
+const swaggerAutogen = require("swagger-autogen");
+const { loginSchema, userRegistrationSchema } = require("../schemas/user");
+const menuSchema = require("../schemas/menus");
 
 const outputFile = "schemas/swagger.json";
 const endpoints = ["routes/auth.js", "routes/menus.js"];
@@ -24,21 +24,25 @@ const doc = {
       url: "http://localhost:8081/menusapi/api/v1/",
     },
   ],
-  host: "localhost:8081",
-  basePath: "/menusapi/api/v1",
+  host: "localhost:8081/menusapi/api/v1",
+  basePath: "/",
   consumes: ["application/json"],
   produces: ["application/json"],
   securityDefinitions: {
     bearerAuth: {
-      type: "http",
+      type: "apiKey",
+      name: "authorization",
       scheme: "bearer",
       bearerFormat: "JWT",
+      in: "header",
     },
   },
+
+  // securityDefinitions: {},
   "@definitions": {
-    AddUser: userSchema.registration,
-    Login: userSchema.login,
-    Menus: menusSchema,
+    AddUser: userRegistrationSchema,
+    Login: loginSchema,
+    Menus: menuSchema,
   },
 };
 
