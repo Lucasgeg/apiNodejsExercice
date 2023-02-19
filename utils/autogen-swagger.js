@@ -26,10 +26,10 @@ const doc = {
       url: "http://localhost:8081/menusapi/api/v1/",
     },
   ],
-  host:
-    process.env.ENVIRONMENT === "development"
-      ? "localhost:8081"
-      : "https://apinodejsexercice.onrender.com",
+  // ! For local
+  // host: "localhost:8081",
+  // ! For prod mod
+  host: "apinodejsexercice.onrender.com",
   basePath: "/menusapi/api/v1/",
   schemes: ["http", "https"],
   consumes: ["application/json"],
