@@ -13,15 +13,16 @@
       "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
     }
   },
-  "host": "localhost:8081/menusapi/api/v1",
+  "host": "localhost:8081",
   "servers": [
     {
       "url": "http://localhost:8081/menusapi/api/v1/"
     }
   ],
-  "basePath": "/",
+  "basePath": "/menusapi/api/v1/",
   "schemes": [
-    "http"
+    "http",
+    "https"
   ],
   "securityDefinitions": {
     "bearerAuth": {

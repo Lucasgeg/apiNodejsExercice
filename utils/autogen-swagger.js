@@ -1,6 +1,8 @@
 const swaggerAutogen = require("swagger-autogen");
 const { loginSchema, userRegistrationSchema } = require("../schemas/user");
 const { menusSchema, updateMenuSchema } = require("../schemas/menus");
+const dotenv = require("dotenv");
+dotenv.config();
 
 const outputFile = "schemas/swagger.json";
 const endpoints = ["routes/auth.js", "routes/menus.js"];
@@ -24,8 +26,12 @@ const doc = {
       url: "http://localhost:8081/menusapi/api/v1/",
     },
   ],
-  host: "localhost:8081/menusapi/api/v1",
-  basePath: "/",
+  host:
+    process.env.ENVIRONMENT === "development"
+      ? "localhost:8081"
+      : "https://apinodejsexercice.onrender.com",
+  basePath: "/menusapi/api/v1/",
+  schemes: ["http", "https"],
   consumes: ["application/json"],
   produces: ["application/json"],
   securityDefinitions: {
