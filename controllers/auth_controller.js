@@ -12,8 +12,6 @@ const {
 const { userRegistrationSchema } = require("../schemas/user");
 const { ERROR_MESSAGES, COLLECTIONS } = require("../utils/enum");
 
-// TODO: Explain where the admin privilege is needed
-
 exports.register = async (req, res) => {
   /* #swagger.tags = ['Auth']
      #swagger.description = 'Service to register a new user for the menu API No authorization needed';
