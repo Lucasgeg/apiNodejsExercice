@@ -5,7 +5,7 @@ const { ERROR_MESSAGES, COLLECTIONS } = require("../utils/enum");
 
 exports.read = async (req, res) => {
   /* #swagger.tags = ['Menus']
-   #swagger.description = 'Service to get all menus from the database';
+   #swagger.description = 'Service to get all menus from the database authorization needed admin=false/true';
    #swagger.summary = "Service to get all menus from the database";
    #swagger.security = [{
             "bearerAuth": []
@@ -50,7 +50,7 @@ exports.read = async (req, res) => {
 exports.getOneMenu = async (req, res) => {
   /* #swagger.tags = ['Menus']
   
-   #swagger.description = 'Service to get one menu from the database';
+   #swagger.description = 'Service to get one menu from the database authorization needed admin=false/true';
    #swagger.summary = "Service to get one menu from the database";
    
        #swagger.security = [{
@@ -103,12 +103,10 @@ exports.getOneMenu = async (req, res) => {
   return res.status(200).send(doc.data());
 };
 
-// TODO: Explain where the admin privilege is needed
-
 exports.createMenus = async (req, res) => {
   /* #swagger.tags = ['Menus']
-   #swagger.description = 'Service to create menus';
-   #swagger.summary = "Service to create menus and send to the database";
+   #swagger.description = 'Service to create menus authorization needed admin=true';
+   #swagger.summary = "Service to create menus and send to the ";
     #swagger.security = [{
     "bearerAuth": []
 }] 
@@ -174,7 +172,7 @@ exports.createMenus = async (req, res) => {
 exports.delete = async (req, res) => {
   /* #swagger.tags = ['Menus']
 
-   #swagger.description = 'Service to delete a Menus';
+   #swagger.description = 'Service to delete a Menus authorization needed admin=true';
 
    #swagger.summary = "Service to delete" a Menu from the database;
    
@@ -247,7 +245,7 @@ exports.delete = async (req, res) => {
 exports.update = async (req, res) => {
   /* #swagger.tags = ['Menus']
 
-   #swagger.description = 'Service to get update a menu';
+   #swagger.description = 'Service to get update a menu authorization needed admin=true';
 
    #swagger.summary = "Service to update a menu from the database";
 

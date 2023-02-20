@@ -16,7 +16,7 @@ const { ERROR_MESSAGES, COLLECTIONS } = require("../utils/enum");
 
 exports.register = async (req, res) => {
   /* #swagger.tags = ['Auth']
-     #swagger.description = 'Service to register a new user for the menu API';
+     #swagger.description = 'Service to register a new user for the menu API No authorization needed';
      #swagger.summary = "Service to register a new user";
      #swagger.responses[200] = {
                   description: 'Registration is succesfull',
@@ -80,7 +80,7 @@ exports.register = async (req, res) => {
 exports.login = async (req, res) => {
   /* #swagger.tags = ['Auth']
    #swagger.description = 'Service to login';
-   #swagger.summary = "Service to login a user to the app";
+   #swagger.summary = "Service to login a user to the app No authorization needed";
    #swagger.responses[200] = {
                 description: 'Login sucess',
                 schema: {
@@ -150,7 +150,7 @@ exports.login = async (req, res) => {
 exports.me = (req, res) => {
   /* #swagger.tags = ['Auth']
    #swagger.description = 'Please put the bearer token on the top of the request, not on the authorization input field';
-   #swagger.summary = "Service to know if user is an administrator";
+   #swagger.summary = "Service to know if user is an administrator Authorization needed admin=false/true";
     #swagger.security = [{
             "bearerAuth": []
     }]
