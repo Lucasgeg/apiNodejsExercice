@@ -103,6 +103,8 @@ exports.getOneMenu = async (req, res) => {
   return res.status(200).send(doc.data());
 };
 
+// TODO: Explain where the admin privilege is needed
+
 exports.createMenus = async (req, res) => {
   /* #swagger.tags = ['Menus']
    #swagger.description = 'Service to create menus';
