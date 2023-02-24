@@ -46,7 +46,7 @@
           "Auth"
         ],
         "summary": "Service to register a new user",
-        "description": "Service to register a new user for the menu API",
+        "description": "Service to register a new user for the menu API No authorization needed",
         "parameters": [
           {
             "name": "obj",
@@ -124,7 +124,7 @@
         "tags": [
           "Auth"
         ],
-        "summary": "Service to login a user to the app",
+        "summary": "Service to login a user to the app No authorization needed",
         "description": "Service to login",
         "parameters": [
           {
@@ -198,7 +198,7 @@
         "tags": [
           "Auth"
         ],
-        "summary": "Service to know if user is an administrator",
+        "summary": "Service to know if user is an administrator Authorization needed admin=false/true",
         "description": "Please put the bearer token on the top of the request, not on the authorization input field",
         "parameters": [
           {
@@ -252,7 +252,7 @@
           "Menus"
         ],
         "summary": "Service to get all menus from the database",
-        "description": "Service to get all menus from the database",
+        "description": "Service to get all menus from the database authorization needed admin=false/true",
         "parameters": [
           {
             "name": "authorization",
@@ -323,7 +323,7 @@
           "Menus"
         ],
         "summary": "Service to get one menu from the database",
-        "description": "Service to get one menu from the database",
+        "description": "Service to get one menu from the database authorization needed admin=false/true",
         "parameters": [
           {
             "name": "menuId",
@@ -403,8 +403,8 @@
         "tags": [
           "Menus"
         ],
-        "summary": "Service to create menus and send to the database",
-        "description": "Service to create menus",
+        "summary": "Service to create menus and send to the ",
+        "description": "Service to create menus authorization needed admin=true",
         "parameters": [
           {
             "name": "authorization",
@@ -441,7 +441,7 @@
           "Menus"
         ],
         "summary": "Service to delete",
-        "description": "Service to delete a Menus",
+        "description": "Service to delete a Menus authorization needed admin=true",
         "parameters": [
           {
             "name": "authorization",
@@ -484,7 +484,7 @@
           "Menus"
         ],
         "summary": "Service to update a menu from the database",
-        "description": "Service to get update a menu",
+        "description": "Service to get update a menu authorization needed admin=true",
         "parameters": [
           {
             "name": "authorization",
@@ -592,24 +592,28 @@
         "name": {
           "type": "string",
           "description": "name of the user",
-          "default": "John Doe"
+          "default": "John Doe",
+          "maxLength": 50
         },
         "email": {
           "type": "string",
           "pattern": "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+.[a-zA-Z]{2,}$",
           "description": "email of the user",
-          "default": "toto@gmail.com"
+          "default": "toto@gmail.com",
+          "maxLength": 50
         },
         "password": {
           "type": "string",
           "description": "password of the user",
           "pattern": "^(?=.*[0-9]{3})(?=.*[!@#$%^&*]{2}).{13,}$",
-          "default": "fsdfsd2+65ffds"
+          "default": "fsdfsd2+65ffds",
+          "maxLength": 50
         },
         "pseudo": {
           "type": "string",
           "description": "The user pseudo",
-          "default": "DilidoMaster"
+          "default": "DilidoMaster",
+          "maxLength": 50
         },
         "admin": {
           "type": "boolean",
@@ -650,22 +654,31 @@
       "properties": {
         "id": {
           "type": "string",
-          "default": "Axfdsf451dqDs"
+          "description": "The unique uid of the menu",
+          "default": "Axfdsf451dqDs",
+          "maxLength": 50
         },
         "starter": {
           "type": "string",
-          "default": "Salade de thon"
+          "description": "The starter of the menu",
+          "default": "Salade de thon",
+          "maxLength": 50
         },
         "main": {
           "type": "string",
-          "default": "Tartare de boeuf bien cuit"
+          "description": "main dish",
+          "default": "Tartare de boeuf bien cuit",
+          "maxLength": 50
         },
         "dessert": {
           "type": "string",
-          "default": "Soupe à l'oignon"
+          "description": "The dessert",
+          "default": "Soupe à l'oignon",
+          "maxLength": 50
         },
         "price": {
           "type": "number",
+          "description": "The price of the menu",
           "default": 75.5
         }
       },
@@ -681,22 +694,30 @@
       "properties": {
         "id": {
           "type": "string",
-          "default": "Axfdsf451dqDs"
+          "default": "Axfdsf451dqDs",
+          "description": "The unique uid of the menu"
         },
         "starter": {
           "type": "string",
-          "default": "Salade de thon"
+          "description": "The starter of the menu",
+          "default": "Salade de thon",
+          "maxLength": 50
         },
         "main": {
           "type": "string",
-          "default": "Tartare de boeuf bien cuit"
+          "description": "main dish",
+          "default": "Tartare de boeuf bien cuit",
+          "maxLength": 50
         },
         "dessert": {
           "type": "string",
-          "default": "Soupe à l'oignon"
+          "description": "The dessert",
+          "default": "Soupe à l'oignon",
+          "maxLength": 50
         },
         "price": {
           "type": "number",
+          "description": "The price of the menu",
           "default": 75.5
         }
       },

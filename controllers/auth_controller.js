@@ -134,7 +134,7 @@ exports.login = async (req, res) => {
       return res.status(200).send({
         message: "you are connected!",
         id: userData.id,
-        jwt,
+        jwt: `bearer ${jwt}`,
         refreshJwt,
       });
     }

@@ -5,23 +5,27 @@ exports.userRegistrationSchema = {
       type: "string",
       description: "name of the user",
       default: "John Doe",
+      maxLength: 50,
     },
     email: {
       type: "string",
       pattern: "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+.[a-zA-Z]{2,}$",
       description: "email of the user",
       default: "toto@gmail.com",
+      maxLength: 50,
     },
     password: {
       type: "string",
       description: "password of the user",
       pattern: "^(?=.*[0-9]{3})(?=.*[!@#$%^&*]{2}).{13,}$",
       default: "fsdfsd2+65ffds",
+      maxLength: 50,
     },
     pseudo: {
       type: "string",
       description: "The user pseudo",
       default: "DilidoMaster",
+      maxLength: 50,
     },
     admin: {
       type: "boolean",
