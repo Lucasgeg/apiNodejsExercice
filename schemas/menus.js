@@ -11,19 +11,19 @@ exports.menusSchema = {
       type: "string",
       description: "The starter of the menu",
       default: "Salade de thon",
-      maxLength: 15,
+      maxLength: 35,
     },
     main: {
       type: "string",
       description: "main dish",
       default: "Tartare de boeuf bien cuit",
-      maxLength: 15,
+      maxLength: 35,
     },
     dessert: {
       type: "string",
       description: "The dessert",
       default: "Soupe à l'oignon",
-      maxLength: 15,
+      maxLength: 35,
     },
     price: {
       type: "number",
