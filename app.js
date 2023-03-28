@@ -32,7 +32,7 @@ const options = {
     persistAuthorization: true,
   },
   customCssUrl:
-    "https://cdn.jsdelivr.net/npm/swagger-ui-themes@3.0.0/themes/3.x/theme-outline.css",
+    "https://cdn.jsdelivr.net/npm/swagger-ui-themes@3.0.0/themes/3.x/theme-flattop.css",
 };
 // require("./utils/swagger")
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerFile, options));

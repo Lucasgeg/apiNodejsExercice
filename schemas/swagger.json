@@ -593,27 +593,27 @@
           "type": "string",
           "description": "name of the user",
           "default": "John Doe",
-          "maxLength": 50
+          "maxLength": 10
         },
         "email": {
           "type": "string",
           "pattern": "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+.[a-zA-Z]{2,}$",
           "description": "email of the user",
           "default": "toto@gmail.com",
-          "maxLength": 50
+          "maxLength": 20
         },
         "password": {
           "type": "string",
           "description": "password of the user",
           "pattern": "^(?=.*[0-9]{3})(?=.*[!@#$%^&*]{2}).{13,}$",
           "default": "fsdfsd2+65ffds",
-          "maxLength": 50
+          "maxLength": 20
         },
         "pseudo": {
           "type": "string",
           "description": "The user pseudo",
           "default": "DilidoMaster",
-          "maxLength": 50
+          "maxLength": 15
         },
         "admin": {
           "type": "boolean",
@@ -656,25 +656,25 @@
           "type": "string",
           "description": "The unique uid of the menu",
           "default": "Axfdsf451dqDs",
-          "maxLength": 50
+          "maxLength": 20
         },
         "starter": {
           "type": "string",
           "description": "The starter of the menu",
           "default": "Salade de thon",
-          "maxLength": 50
+          "maxLength": 35
         },
         "main": {
           "type": "string",
           "description": "main dish",
           "default": "Tartare de boeuf bien cuit",
-          "maxLength": 50
+          "maxLength": 35
         },
         "dessert": {
           "type": "string",
           "description": "The dessert",
           "default": "Soupe à l'oignon",
-          "maxLength": 50
+          "maxLength": 35
         },
         "price": {
           "type": "number",
@@ -701,19 +701,19 @@
           "type": "string",
           "description": "The starter of the menu",
           "default": "Salade de thon",
-          "maxLength": 50
+          "maxLength": 15
         },
         "main": {
           "type": "string",
           "description": "main dish",
           "default": "Tartare de boeuf bien cuit",
-          "maxLength": 50
+          "maxLength": 15
         },
         "dessert": {
           "type": "string",
           "description": "The dessert",
           "default": "Soupe à l'oignon",
-          "maxLength": 50
+          "maxLength": 15
         },
         "price": {
           "type": "number",
